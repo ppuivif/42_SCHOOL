@@ -20,7 +20,9 @@ void	*ft_calloc(size_t nmemb, size_t size)
 
 	i = 0;
 	j = nmemb * size;
-	if (j > 2147483646 || (size > 65535 && nmemb > 65535))
+	if (!size || !nmemb)
+		return (malloc(1));
+	if (j > 4294967295 || (size > 65535 && nmemb > 65535))
 		return (NULL);
 	str = (char *)malloc(j);
 	if (str)

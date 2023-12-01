@@ -8,17 +8,17 @@ OBJECTS=$(SOURCES:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJECTS)
-	ar rcs $(NAME) $(OBJECTS)
+	ar -rcs $(NAME) $(OBJECTS)
 
-test : all
-	$(CC) $(CFLAGS) -o test main.c libft.a
-
+%.o : %.c $(HEADER)
+	$(CC) $(CFLAGS) -c $< -o $@
+	
 clean :
 	rm -rf $(OBJECTS)
 
 fclean : clean
-	rm -rf $(NAME) test a.out
+	rm -rf $(NAME)
 
 re: fclean all
 
-.PHONY: all fclean re
+.PHONY: all clean fclean re

@@ -10,10 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include "libft.h"
 
-char	*ft_fill_str(char *s1, const char *s2, int i, int j)
+static char	*ft_fill_str(char *s1, const char *s2, int i, int j)
 {
 	while (s2[j] != '\0')
 	{

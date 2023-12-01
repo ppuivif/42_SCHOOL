@@ -11,9 +11,8 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
-int	ft_lenght_param(long int n)
+static int	ft_lenght_param(long int n)
 {
 	int	i;
 
@@ -28,7 +27,7 @@ int	ft_lenght_param(long int n)
 	return (i);
 }
 
-int	ft_sign(int n)
+static int	ft_sign(int n)
 {
 	int	sign;
 
