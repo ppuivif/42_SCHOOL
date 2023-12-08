@@ -12,7 +12,7 @@ $(NAME): $(OBJECTS)
 
 %.o : %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
-	
+	       
 clean :
 	rm -rf $(OBJECTS)
 

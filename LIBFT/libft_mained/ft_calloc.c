@@ -22,9 +22,11 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	j = nmemb * size;
 	if (!size || !nmemb)
 		return (malloc(1));
-	if (nmemb * size / size != nmemb)
+//	if (nmemb * size / size != nmemb)
 //	if ((long) nmemb <= 0 || (long) size <= 0 || nmemb * size < __SIZE_MAX__)
 //		return (NULL);
+	if (j > 4294967295 || (size > 65535 && nmemb > 65535))
+		return (NULL);
 	str = (char *)malloc(j);
 	if (str)
 	{

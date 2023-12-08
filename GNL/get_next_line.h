@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftprintf.h                                      :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppuivif <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/29 13:55:18 by ppuivif           #+#    #+#             */
-/*   Updated: 2023/11/29 13:58:26 by ppuivif          ###   ########.fr       */
+/*   Created: 2023/12/08 13:43:48 by ppuivif           #+#    #+#             */
+/*   Updated: 2023/12/08 13:53:24 by ppuivif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-#include <stdlib.h>
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 5
+# endif
+
 #include <unistd.h>
-#include <stdarg.h>
+#include <stdlib.h>
+#include <fcntl.h>
 
-int	ft_printf(const char*, ...);
-int	ft_putchar(char c);
-int	ft_putstr(char *s);
-int	ft_putnbr(int nb);
-int	ft_hexa_lower(unsigned int);
-int	ft_hexa_upper(unsigned int);
+char	*get_next_line(int fd);
+int	ft_strlen(char *s);
+char	*ft_fill_str(char *s1, const char *s2, int i, int j);
+char	*ft_strjoin(char const *s1, char const *s2);
 
 #endif
