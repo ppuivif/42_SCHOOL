@@ -2,6 +2,7 @@ Makefile or makefile
 
 Nota (CHATGPT)
 NAME et HEADER aren't standard functions but rather variables which can be used to custom running of Makefile.
+
 NAME :
 
 Souvent utilisé pour spécifier le nom de l'exécutable que vous souhaitez générer à partir de votre code source. Par exemple, si vous avez un programme en C, la variable NAME pourrait être utilisée pour définir le nom de l'exécutable que vous souhaitez générer.
@@ -20,7 +21,6 @@ HEADER :
 
 Utilisé pour spécifier les fichiers d'en-tête (headers) à inclure dans la compilation. Les fichiers d'en-tête contiennent généralement les déclarations de fonctions et les prototypes nécessaires pour que le compilateur comprenne comment les fonctions sont définies dans d'autres fichiers source.
 Exemple :
-
 make
 HEADER = myheader.h
 all: my_program

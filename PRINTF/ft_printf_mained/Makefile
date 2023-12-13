@@ -14,7 +14,7 @@ CC=cc
 CFLAGS=-Wall -Wextra -Werror -g
 NAME=libftprintf.a
 HEADER=libftprintf.h
-SOURCES= ft_printf.c added_functions.c
+SOURCES= ft_printf.c added_functions_1.c added_functions_2.c
 OBJECTS=$(SOURCES:.c=.o)
 
 all: $(NAME)

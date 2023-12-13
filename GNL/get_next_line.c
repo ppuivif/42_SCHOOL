@@ -6,7 +6,7 @@
 /*   By: ppuivif <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 13:34:35 by ppuivif           #+#    #+#             */
-/*   Updated: 2023/12/08 20:03:34 by ppuivif          ###   ########.fr       */
+/*   Updated: 2023/12/12 11:40:35 by ppuivif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,34 @@
 
 char	*get_next_line(int fd)
 {
-	int	n;
+	int	nb_read_bytes;
+//n est le retour de read, a savoir le nbre d'octets reellement lus
 	size_t	i;
-	char	buf[BUFFER_SIZE];
-//	static char *str_init;
-	char	str[BUFFER_SIZE];
+	static char	*buf;
+//la variable buf est declaree en statique car elle doit conserver le contenu du debut de la ligne suivante pour l'ecrire (elle est statique entre open et close)
+	char	*line;
+//line sera retournee
 	
-	i = 0;
-	while (str[i] != '\n')
+//	i = 0;
+//	str = NULL;
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	line = (char *)malloc(sizeof(char);
+//malloc a 1, vide
+	while (ft_end_of_line(line) = 0)
 	{	
-		n = read(fd, buf, BUFFER_SIZE);
-		if (fd == 0 || fd < 0)
+		nb_read_bytes = read(fd, buf, BUFFER_SIZE);
+		if (nb_read_bytes == -1)
+//erreur de lecture
 			return(NULL);
-//		if (n == 0)//Terminer
-//			return(str);
-		if (n == -1)//Erreur
-			return(NULL);
-		ft_strjoin(str, buf);
-		i++;
+		if (nb_read_bytes == 0)
+//fin de fichier(read n'a rien lu)
+			return(line);
+//		buf[n] = 0;
+		line = ft_strjoin(line, buf);
 	}
-//	str_init = substr(buf, start, n)
+	line = ft_strjoin(line, buf)
+	buf = ft_begin_new_line(buf, nb_read_bytes);
 	return (str);
 
 }
@@ -43,11 +51,11 @@ char	*get_next_line(int fd)
 int	main(void)
 {
 	int fd;
-	char	*tab;
+//	char	*tab;
 
 	fd = open ("document", O_RDONLY);
-	tab = get_next_line(fd);
-	printf("%s", tab);
+//	tab = get_next_line(fd);
+	printf("%s", get_next_line(fd));
 	close (fd);
 	return (0);
 }

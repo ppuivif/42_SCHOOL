@@ -62,15 +62,15 @@ int	ft_printf(const char *str, ...)
 	return (len);
 }
 
-/*#include <stdio.h>
+#include <stdio.h>
 #include <limits.h>
 
 int	main()
 {
-	int s;
-	s = LONG_MIN;
-	printf("real_function give : %u\n", s);
-	printf("real_function return : %d\n", printf("%u", s));
-	ft_printf("ft_function give : %u\n", s);
-	ft_printf("ft_function return : %d\n", ft_printf("%u", s));
-}*/
+	char *s;
+	s = "deux";
+	printf("real_function give : %s\n", s);
+	printf("real_function return : %d\n", printf("%s", s));
+	ft_printf("ft_function give : %s\n", s);
+	ft_printf("ft_function return : %d\n", ft_printf("%s", s));
+}
