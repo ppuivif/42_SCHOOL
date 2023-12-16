@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 5
+#  define BUFFER_SIZE 100000
 # endif
 
 #include <unistd.h>
@@ -25,6 +25,10 @@ char		*get_next_line(int fd);
 int		ft_strlen(char *s);
 char		*ft_fill_str(char *s1, const char *s2, int i, int j);
 char		*ft_strjoin(char *s1, char *s2);
-char		*strchr(const char *s, int c);
+int		ft_end_line(char *s);
+char		*ft_begin_new_line(char *s1);
+char		*ft_close_current_line(char *s1);
+void		ft_free(char *s);
+char		*ft_free_NULL(char *s);
 
 #endif

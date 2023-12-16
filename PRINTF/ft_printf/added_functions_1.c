@@ -74,9 +74,7 @@ int	ft_putnbr(int nb)
 		sign = 1;
 	}
 	if (nb > 9)
-	{
 		i = ft_putnbr(nb / 10);
-	}
 	i += ft_putchar((nb % 10) + '0');
 	return (i + sign);
 }

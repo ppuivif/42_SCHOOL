@@ -12,13 +12,13 @@
 
 #include "get_next_line.h"
 
-int	ft_free(char *s)
+void	ft_free(char *s)
 {
 	free(s);
 	s = NULL;
 }
 
-int	ft_free_NULL(char *s)
+char	*ft_free_NULL(char *s)
 {
 	ft_free(s);
 	return(NULL);
@@ -29,7 +29,7 @@ int	ft_strlen(char *s)
 	int	i;
 	
 	i = 0;
-	while (s[i])
+	while (s && s[i])
 		i++;
 	return (i);
 }
@@ -37,7 +37,7 @@ int	ft_strlen(char *s)
 char	*ft_fill_str(char *s1, const char *s2, int i, int j)
 
 {
-	while (s2[j] != '\0')
+	while (s2 && s2[j] != '\0')
 	{
 		s1[i] = s2[j];
 		i++;
@@ -55,87 +55,99 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	i = 0;
 	j = 0;
-	if (!s1 || !s2)
+	str = (char *)calloc((ft_strlen(s1) + ft_strlen(s2) + 1), sizeof (char));
+	if (!str)
 		return (NULL);
-	str = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof (char));
-	if (str)
+	while (s1 && s1[i])
 	{
-		ft_fill_str(str, s1, i, i);
-		i = ft_strlen(str);
-		ft_fill_str(str, s2, i, j);
-		free(s1);
-		s1 = NULL;
-		return (str);
+		str[i] = s1[i];
+		i++;
 	}
-	return (NULL);
+	while (s2 && s2[j])
+	{
+		str[i + j] = s2[j];
+		j++;
+	}
+	if(s1)
+		free(s1);
+	str[i + j] = '\0';
+	free(s2);
+	if(str[0] == '\0')
+	{
+		free(str);
+		return (NULL);
+	}
+	return (str);
 }
 
-int	ft_end_of_line(const char *s)
+int	ft_end_line(char *s)//recherche du /n
 {
 	int		i;
 
 	if (!s)
-		return(NULL);
+		return(0);
+//0 a confirmer
 	i = 0;
 	while (s[i] != '\0')
 	{
-		if (s[i] == "/n")
-			return (i));
+		if (s[i] == '\n')
+			return (i + 1);
+//cas particulier du '\n' en debut de buf			
 		i++;
 	}
 	return (0);
 }
 
-/*char	*ft_substr(char	const *s, unsigned int start, size_t len)
+#include <stdio.h>
+//close retourne les derniers caracteres a inserer en fin de line
+char	*ft_close_current_line(char *s1)
 {
-	size_t		i;
-	size_t		j;
-	char		*str;
+	char	*s2;
+	int	len;
+	int	i;
 
-	i = start;
-	j = 0;
-	if (!s)
+	len = ft_end_line(s1);
+	s2 = (char *)calloc((len + 1), sizeof(char));//1 pour '\0'
+	if (!s2)
 		return (NULL);
-	if (start > (unsigned int)ft_strlen(s))
-		return (ft_strdup(""));
-	if (len > (ft_strlen(&s[start])))
-		len = ft_strlen(&s[start]);
-	str = (char *)malloc((len + 1) * sizeof (char));
-	if (!str)
-		ft_free_NULL(str);	
-	else
+	i = 0;
+	while (s1 && s1[i] && i < len)
 	{
-		while (j < len && s[i] != '\0')
-		{
-			str[j] = s[i];
-			j++;
-			i++;
-		}
-		str[j] = '\0';
-		return (str);
+		s2[i] = s1[i];
+		i++;
 	}
-}*/
+	s2[i] = '\0';
+	return (s2);
+}
 
-char	*ft_begin_new_line(char *s1, nb_read_bytes)
+//begin retourne les premiers caracteres a inserer en debut de line
+char	*ft_begin_new_line(char *s1)
 {
 	char	*s2;
 	int	len;
 	int	i;
 	int	j;
 
-	len = nb_read_bytes - ft_end_of_line(s1);
-	s2 = (char *)malloc((len + 1) * sizeof(char));
-	if (!s2 || !s1)
-		ft_free_NULL(s2);
+	len = ft_strlen(s1) - ft_end_line(s1);//-1 pour declage i0
+	if (len == 0)
+	{
+		free(s1);
+		return (NULL);
+	}
+	s2 = (char *)calloc(len + 1, sizeof(char));//+1 pour le '\0'
+	if (!s2)//s1 vide deja verifie dans gnl 
+		return (NULL);
 	i = 0;
-	j = ft_end_of_line(s1) + 1
-	while (s1[i])
+	j = ft_end_line(s1);
+	while (s1 && s1[j])
 	{
 		s2[i] = s1[j];
 		i++;
 		j++;
 	}
+	if (s1)
+		free(s1);
 	s2[i] = '\0';
-	ft_free(s1);
 	return (s2);
+//	ft_free(s2);
 }

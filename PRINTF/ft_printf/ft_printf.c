@@ -49,7 +49,7 @@ int	ft_printf(const char *str, ...)
 		return (-1);
 	while (str[i])
 	{
-		if (str[i] == '%')
+		if (str[i] == '%' && str[i + 1] != '\0')
 		{
 			len += format(str[i + 1], list);
 			i++;

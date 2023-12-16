@@ -61,12 +61,11 @@ char	*get_next_line(int fd)
 		nb_read_bytes = read(fd, tmp, BUFFER_SIZE);
 //		printf("%d\n", nb_read_bytes);
 //		printf("%s", buf);
-		buf = ft_strjoin(buf, tmp);
+		tmp[nb_read_bytes] = '\0';
 		if (nb_read_bytes == -1)//erreur de lecture
 			return(NULL);
-		if (nb_read_bytes == 0)
-			return (buf);
-		if (ft_end_line(buf) > 0)
+		buf = ft_strjoin(buf, tmp);
+		if (ft_end_line(buf) > 0 || nb_read_bytes == 0)
 		{
 			line = ft_strjoin(line, ft_close_current_line(buf));
 			buf = ft_begin_new_line(buf);
@@ -74,4 +73,23 @@ char	*get_next_line(int fd)
 		}
 //		line = ft_strjoin(line, buf);
 	}
+}
+
+int	main(void)
+{
+	int fd;
+	char	*tab;
+	int	i = 0;
+
+	fd = open ("document", O_RDONLY);
+	while (i < 30)
+	{
+		tab = get_next_line(fd);
+		printf("%s", tab);
+		free(tab);
+		i++;
+	}
+	close (fd);
+//close permet de fermer l'acces au fichier prealablement open
+	return (0);
 }
