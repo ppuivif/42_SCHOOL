@@ -1,33 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   do_op.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppuivif <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/08 13:43:48 by ppuivif           #+#    #+#             */
-/*   Updated: 2023/12/08 13:53:24 by ppuivif          ###   ########.fr       */
+/*   Created: 2023/12/16 16:16:36 by ppuivif           #+#    #+#             */
+/*   Updated: 2023/12/16 16:41:53 by ppuivif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1000
-# endif
-
 #include <unistd.h>
 #include <stdlib.h>
-#include <fcntl.h>
+#include <stdio.h>
 
-char		*get_next_line (int fd);
-int		ft_strlen(char *s);
-char		*fill_str(char *s1, const char *s2, int i, int j);
-char		*ft_strjoin(char *s1, char *s2);
-int		find_line_return(char *s);
-int		find_zero(char *s);
-char		*begin_new_line(char *s1);
-char		*close_current_line(char *s1);
+int	do_op(int i1, char op, int i2)
+{
+	int	result;
 
-#endif
+	result = 0;
+	if (op == '+')
+		result = i1 + i2;
+	else if (op == '-')
+		result = i1 - i2;
+	else if (op == '*')
+		result = i1 * i2;
+	else if (op == '/')
+		result = i1 / i2;
+	printf("%d\n", result);
+	return (result);
+}
+
+int	main(int argc, char **argv)
+{
+	if (argc == 4)
+		do_op(atoi(argv[1]), argv[2][0], atoi(argv[3]));
+	else
+		write(1, "\n", 1);
+	return (0);
+}

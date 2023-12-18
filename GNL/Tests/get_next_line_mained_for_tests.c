@@ -13,6 +13,7 @@
 #include "get_next_line.h"
 #include <stdio.h>
 #include <string.h>
+#include <limits.h>
 
 char	*get_next_line(int fd)
 {
@@ -23,7 +24,6 @@ char	*get_next_line(int fd)
 //la variable buf est declaree en statique car elle doit conserver le contenu du debut de la ligne suivante pour l'ecrire (elle est statique jusqu'a le fin de l'execution du prog)
 //en statique les variables sont free automatiquement
 	char	*tmp;
-
 	char	*line;
 //line sera retournee
 
@@ -33,7 +33,7 @@ char	*get_next_line(int fd)
 //	buf[BUFFER_SIZE] = 0;
 		
 	nb_read_bytes = 0;
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd >= 1024 || BUFFER_SIZE <= 0)
 		return (NULL);
 //	if (!buf)
 //		buf = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
@@ -46,7 +46,7 @@ char	*get_next_line(int fd)
 	else
 */		line = NULL;
 //	printf("%s", line);	
-	if (buf && ft_end_line(buf) > 0)
+	if (buf && ft_find_end_line(buf) > 0)
 	{
 		line = ft_strjoin(line, ft_close_current_line(buf));
 		buf = ft_begin_new_line(buf);
@@ -65,7 +65,7 @@ char	*get_next_line(int fd)
 		if (nb_read_bytes == -1)//erreur de lecture
 			return(NULL);
 		buf = ft_strjoin(buf, tmp);
-		if (ft_end_line(buf) > 0 || nb_read_bytes == 0)
+		if (ft_find_end_line(buf) > 0 || nb_read_bytes == 0)
 		{
 			line = ft_strjoin(line, ft_close_current_line(buf));
 			buf = ft_begin_new_line(buf);
@@ -82,7 +82,7 @@ int	main(void)
 	int	i = 0;
 
 	fd = open ("document", O_RDONLY);
-	while (i < 30)
+	while (i < 20)
 	{
 		tab = get_next_line(fd);
 		printf("%s", tab);
