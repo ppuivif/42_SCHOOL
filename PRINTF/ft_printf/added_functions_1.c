@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include <stdio.h>
 
 int	ft_putchar(char c)
 {
@@ -34,7 +33,7 @@ int	ft_putstr(char *s)
 	return (i);
 }
 
-int	ft_pointer(unsigned long n)
+int	ft_pointer(unsigned long int n)
 {
 	int		i;
 	char	*tab;

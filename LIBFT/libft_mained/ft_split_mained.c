@@ -71,7 +71,7 @@ char	**ft_split(char const *s, char c)
 {
 	int		start;
 	int		len;
-	int		i;1
+	int		i;
 	char	**tab;
 
 	if (ft_count_words(s, c) == 0)

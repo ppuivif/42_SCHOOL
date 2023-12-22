@@ -13,6 +13,21 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
+void	free_all(char *s1, char *s2)
+{
+	if (s1)
+	{
+		free(s1);
+		s1 = NULL;
+	}	
+	if (s2)
+	{
+		free(s2);
+		s2 = NULL;
+	}
+}
+
+
 int	ft_strlen(char *s)
 {
 	int	i;
@@ -58,17 +73,21 @@ char	*ft_strjoin(char *s1, char *s2)
 		str[i + j] = s2[j];
 		j++;
 	}
-	if(s1)
+/*	if(s1)
+	{
 		free(s1);
+		s1 = NULL;
+	}
 	str[i + j] = '\0';
-	free(s2);
-	if(str[0] == '\0')
+*/	free(s1);
+	s1 = NULL;
+/*	if(str[0] == '\0')
 	{
 		free(str);
 		return (NULL);
 	}
-//	printf("%s\n", "end str join");
-	return (str);
+	printf("%s\n", "end str join");
+*/	return (str);
 }
 
 int	find_zero(char *s)//recherche du '\0
@@ -124,7 +143,7 @@ char	*close_current_line(char *s1)
 		s2[i] = s1[i];
 		i++;
 	}
-	s2[i] = '\0';
+//	s2[i] = '\0';
 	return (s2);
 }
 
@@ -139,7 +158,7 @@ char	*begin_new_line(char *s1)
 	len = ft_strlen(s1) - find_line_return(s1);
 	if (len == 0)
 	{
-		free(s1);
+		free_all(s1, NULL);
 		return (NULL);
 	}
 	s2 = calloc(len + 1, sizeof(char));//+1 pour le '\0'
@@ -154,8 +173,7 @@ char	*begin_new_line(char *s1)
 		j++;
 	}
 	if (s1)
-		free(s1);
-	s2[i] = '\0';
+		free_all(s1, NULL);
+//	s2[i] = '\0';
 	return (s2);
-//	ft_free(s2);
 }

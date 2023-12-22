@@ -1,41 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   added_functions_2.c                                :+:      :+:    :+:   */
+/*   swap_bits.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppuivif <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/29 18:29:45 by ppuivif           #+#    #+#             */
-/*   Updated: 2023/12/08 11:53:56 by ppuivif          ###   ########.fr       */
+/*   Created: 2023/12/19 08:43:55 by ppuivif           #+#    #+#             */
+/*   Updated: 2023/12/19 08:47:03 by ppuivif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
-
-int	ft_hexa_lower(unsigned int n)
+unsigned char	swap_bits(unsigned char octet)
 {
-	char	*tab;
-	int		i;
-
-	tab = "0123456789abcdef";
-	i = 0;
-	if (n >= 16)
-		i = ft_hexa_lower(n / 16);
-	i += 1;
-	write (1, &tab[n % 16], 1);
-	return (i);
-}
-
-int	ft_hexa_upper(unsigned int n)
-{
-	char	*tab;
-	int		i;
-
-	tab = "0123456789ABCDEF";
-	i = 0;
-	if (n >= 16)
-		i = ft_hexa_upper(n / 16);
-	i += 1;
-	write (1, &tab[n % 16], 1);
-	return (i);
+	return ((octet >> 4) | (octet << 4));
 }

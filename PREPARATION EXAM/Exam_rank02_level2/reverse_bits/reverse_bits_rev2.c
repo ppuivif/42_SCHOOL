@@ -1,41 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   added_functions_2.c                                :+:      :+:    :+:   */
+/*   reverse_bits_rev2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppuivif <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/29 18:29:45 by ppuivif           #+#    #+#             */
-/*   Updated: 2023/12/08 11:53:56 by ppuivif          ###   ########.fr       */
+/*   Created: 2023/12/19 08:33:05 by ppuivif           #+#    #+#             */
+/*   Updated: 2023/12/19 08:43:01 by ppuivif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
-
-int	ft_hexa_lower(unsigned int n)
+unsigned char	reverse bits(unsigned char octet)
 {
-	char	*tab;
-	int		i;
+	int	i;
+	unsigned char res
 
-	tab = "0123456789abcdef";
-	i = 0;
-	if (n >= 16)
-		i = ft_hexa_lower(n / 16);
-	i += 1;
-	write (1, &tab[n % 16], 1);
-	return (i);
-}
-
-int	ft_hexa_upper(unsigned int n)
-{
-	char	*tab;
-	int		i;
-
-	tab = "0123456789ABCDEF";
-	i = 0;
-	if (n >= 16)
-		i = ft_hexa_upper(n / 16);
-	i += 1;
-	write (1, &tab[n % 16], 1);
-	return (i);
+	i = 8;
+	res = 0;
+	while (i >= 0)
+	{
+		res = res * 2 + (octet % 2);
+		octet = octet / 2;
+		write (1, &res, 1);
+		i--;
+	}
+	return (res);
 }

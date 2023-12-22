@@ -22,7 +22,7 @@ static int	format(char c, va_list list)
 	else if (c == 's')
 		len = ft_putstr(va_arg(list, char *));
 	else if (c == 'p')
-		len = ft_pointer(va_arg(list, unsigned long));
+		len = ft_pointer(va_arg(list, unsigned long int));
 	else if (c == 'd' || c == 'i')
 		len = ft_putnbr(va_arg(list, int));
 	else if (c == 'u')

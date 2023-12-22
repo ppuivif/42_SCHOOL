@@ -28,7 +28,7 @@ $(NAME): $(OBJECTS)
 clean :
 	rm -rf $(OBJECTS)
 
-fclean :
+fclean : clean
 	rm -rf $(NAME)
 
 re: fclean all
