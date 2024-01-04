@@ -16,52 +16,36 @@
 
 char	*get_next_line(int fd)
 {
-	int	nb_read_bytes;
-//nb_read_bytes est le retour de read, a savoir le nbre d'octets reellement lus
-
+	int			nb_read_bytes;
 	static char	*buf;
-//la variable buf est declaree en statique car elle doit conserver le contenu du debut de la ligne suivante pour l'ecrire (elle est statique jusqu'a le fin de l'execution du prog)
-//en statique les variables sont free automatiquement
+	char		*tmp;
+	char		*line;
 
-	char	*tmp;
-	char	*line;
-//line sera retournee
-
-	nb_read_bytes = 0;
+//	nb_read_bytes = 0;
 	if (fd < 0 || fd >= 1024 || BUFFER_SIZE <= 0)
 		return (NULL);
-
 	line = NULL;
-//	printf("%s", line);	
-
 	while (1)
 	{
-		tmp = calloc((BUFFER_SIZE + 1), sizeof(char));
+		tmp = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 		if (!tmp)
-			return(NULL);
-
+			return (NULL);
 		nb_read_bytes = read(fd, tmp, BUFFER_SIZE);
-//		printf("%d\n", nb_read_bytes);
-//		printf("%s", buf);
-//		tmp[nb_read_bytes] = '\0';
-		if (nb_read_bytes == -1) //erreur de lecture et fin de fichier
+		if (nb_read_bytes == -1)
 		{
-			free(buf);
-			free(tmp);
-			return(NULL);
+			free_all(tmp, buf);
+			return (NULL);
 		}
-		
 		if (nb_read_bytes == 0)
+//			return (end_of_file(buf, tmp, line));
 		{	
-//			free(tmp);
-//			tmp = NULL;
 			if (buf)
 			{
 				if (find_line_return(buf) > 0)
 				{
 					line = close_current_line(buf);
 					buf = begin_new_line(buf);
-					free(tmp);
+					free_all(tmp, NULL);
 					return (line);
 				}
 				line = ft_strjoin(line, buf);
@@ -69,17 +53,17 @@ char	*get_next_line(int fd)
 				buf = NULL;
 				free(tmp);
 				tmp = NULL;
-//				printf("%s", buf);
 				return (line);
 			}
 			else
 			{
-				free(buf);
 				free(tmp);
+				free(buf);
 				return (NULL);
 			}
 		}
 		buf = ft_strjoin(buf, tmp);
+//		free_all(tmp, NULL);
 		free(tmp);
 		if (buf == NULL)
 			return (NULL);
@@ -91,8 +75,8 @@ char	*get_next_line(int fd)
 		}
 	}
 }
-/*
-int	main(void)
+
+/*int	main(void)
 {
 	int fd;
 	char	*tab;
@@ -112,7 +96,6 @@ int	main(void)
 //close permet de fermer l'acces au fichier prealablement open
 	return (0);
 }*/
-
 
 /*int	main(void)
 {

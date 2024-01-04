@@ -6,7 +6,7 @@
 /*   By: ppuivif <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 13:32:00 by ppuivif           #+#    #+#             */
-/*   Updated: 2023/12/21 14:58:51 by ppuivif          ###   ########.fr       */
+/*   Updated: 2024/01/04 10:23:57 by ppuivif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,14 @@ char	*ft_strrev(char *str)
 
 
 #include <stdio.h>
+#include <string.h>
 
-int	main(int argc, char **argv)
+int	main(void)
 {
-	char	str[] = "abcdefg";
+//	char	str[] = "abcdefg";//declaration et initialisation sur une meme ligne
+	char	str[8];
+
+	strcpy(str, "abcdefg");
 	printf("%s", ft_strrev(str));
 	return (0);
 }

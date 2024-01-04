@@ -27,7 +27,7 @@ void	free_all(char *s1, char *s2)
 	}
 }
 
-/*void	ft_bzero(void *s, size_t n)
+void	ft_bzero(void *s, size_t n)
 {
 	unsigned char	*e;
 	size_t			i;
@@ -39,46 +39,23 @@ void	free_all(char *s1, char *s2)
 		e[i] = '\0';
 		i++;
 	}
-}*/
-
-/*void	*ft_calloc(size_t nmemb, size_t size)
-{
-	char	*str;
-	size_t	j;
-		
-	j = nmemb * size;
-	if (!size || !nmemb)
-		return (malloc(1));
-	if (j > 4294967295 || (size > 65535 && nmemb > 65535))
-		return (NULL);
-	str = malloc(j);
-	if (!str)
-		return (NULL);size_t	i;
-	ft_bzero(str, j);
-	return ((void *) str);
-}*/
+}
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	char	*str;
 	size_t	j;
-	size_t	i;
 	
 	j = nmemb * size;
-	i = 0;
 	if (!size || !nmemb)
 		return (malloc(1));
-	if (j > 4294967295 || (size > 65535 && nmemb > 65535))
-		return (NULL);
 	str = malloc(j);
-	if (!str)
-		return (NULL);
-	while (i < j)
+	if (str)
 	{
-		str[i] = '\0';
-		i++;
+		ft_bzero(str, nmemb);
+		return ((void *) str);
 	}
-	return ((void *) str);
+	return (NULL);
 }
 
 int	ft_strlen(char *s)
@@ -221,8 +198,7 @@ char	*begin_new_line(char *s1)
 	}
 	s2 = ft_calloc(len + 1, sizeof(char));//+1 pour le '\0'
 	if (!s2)//s1 vide deja verifie dans gnl 
-		return (NULL);//			tmp = NULL;
-
+		return (NULL);
 	i = 0;
 	j = find_line_return(s1);
 	while (s1 && s1[j])
@@ -249,7 +225,7 @@ char	*end_of_file(char *buf, char *tmp, char *line)
 			line = close_current_line(buf);
 			buf = begin_new_line(buf);
 			free(tmp);
-//			tmp = NULL;
+			tmp = NULL;
 			return (line);
 		}
 		line = ft_strjoin(line, buf);
@@ -262,7 +238,7 @@ char	*end_of_file(char *buf, char *tmp, char *line)
 	else
 	{
 		free(tmp);
-		free(buf);
+		tmp = NULL;
 		return (NULL);
 	}
 }

@@ -17,49 +17,69 @@
 char	*get_next_line(int fd)
 {
 	int	nb_read_bytes;
+//nb_read_bytes est le retour de read, a savoir le nbre d'octets reellement lus
+
 	static char	*buf;
+//la variable buf est declaree en statique car elle doit conserver le contenu du debut de la ligne suivante pour l'ecrire (elle est statique jusqu'a le fin de l'execution du prog)
+//en statique les variables sont free automatiquement
+
 	char	*tmp;
 	char	*line;
+//line sera retournee
 
 	nb_read_bytes = 0;
 	if (fd < 0 || fd >= 1024 || BUFFER_SIZE <= 0)
 		return (NULL);
+
 	line = NULL;
+//	printf("%s", line);	
+
 	while (1)
 	{
-		tmp = calloc((BUFFER_SIZE + 1), sizeof(char));
+		tmp = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 		if (!tmp)
 			return(NULL);
-
 		nb_read_bytes = read(fd, tmp, BUFFER_SIZE);
-		if (nb_read_bytes == -1)
+//		tmp[nb_read_bytes] = 0; si malloc et non calloc
+//		tmp[nb_read_bytes] = '\0';
+//		printf("%d\n", nb_read_bytes);
+//		printf("%s", buf);
+		if (nb_read_bytes == -1) //erreur de lecture
 		{
-			free_all(buf, tmp);
+			free(buf);
+			free(tmp);
 			return(NULL);
 		}
-		if (nb_read_bytes == 0)
+		if (nb_read_bytes == 0) //fin de fichier
 		{	
+//			free(tmp);
+//			tmp = NULL;
 			if (buf)
 			{
 				if (find_line_return(buf) > 0)
 				{
 					line = close_current_line(buf);
 					buf = begin_new_line(buf);
-					free_all(tmp, NULL);
+					free(tmp);
 					return (line);
 				}
 				line = ft_strjoin(line, buf);
-				free_all(buf, tmp);
+				free(buf);
+				buf = NULL;
+				free(tmp);
+				tmp = NULL;
+//				printf("%s", buf);
 				return (line);
 			}
 			else
 			{
-				free_all(tmp, NULL);
+				free(buf);
+				free(tmp);
 				return (NULL);
 			}
 		}
 		buf = ft_strjoin(buf, tmp);
-		free_all(tmp, NULL);
+		free(tmp);
 		if (buf == NULL)
 			return (NULL);
 		if (find_line_return(buf) > 0)
