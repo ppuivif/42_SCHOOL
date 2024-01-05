@@ -14,49 +14,83 @@
 #include <stdio.h>
 #include <string.h>
 
+static char	*eof(char **buf, char **line, char **tmp)
+{
+	if (*buf)
+	{
+		if (find_line_return(*buf) > 0)
+		{
+			*line = close_current_line(*buf);
+			*buf = begin_new_line(*buf);
+			free(*tmp);
+			*tmp = NULL;
+			return (*line);
+		}
+		*line = ft_strjoin(*line, *buf);
+		free(*buf);
+		*buf = NULL;
+		free(*tmp);
+		*tmp = NULL;
+		return (*line);
+	}
+	else
+	{
+		free(*buf);
+		*buf = NULL;
+		free(*tmp);
+		*tmp = NULL;
+		return (NULL);
+	}
+}
+
+static char	*err(char **buf, char **tmp)
+{
+	free(*buf);
+	*buf = NULL;
+	free(*tmp);
+	*tmp = NULL;
+	return (NULL);
+}
+
+static char	*get_line(char **buf, char **line)
+{
+	*line = close_current_line(*buf);
+	*buf = begin_new_line(*buf);
+	return (*line);
+}
+
+static void	join_buf(char **buf, char **tmp)
+{
+	*buf = ft_strjoin(*buf, *tmp);
+	free(*tmp);
+	*tmp = NULL;
+}
+
 char	*get_next_line(int fd)
 {
-	int	nb_read_bytes;
-//nb_read_bytes est le retour de read, a savoir le nbre d'octets reellement lus
+	int			nb_read_bytes;
 	static char	*buf;
-//la variable buf est declaree en statique car elle doit conserver le contenu du debut de la ligne suivante pour l'ecrire (elle est statique jusqu'a le fin de l'execution du prog)
-//en statique les variables sont free automatiquement
-	char	*tmp;
-	char	*line;
-//line sera retournee
+	char		*tmp;
+	char		*line;
 
-	
 	nb_read_bytes = 0;
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd >= 1024 || BUFFER_SIZE <= 0)
 		return (NULL);
-//	if (!buf)
-//		buf = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-// ne pas mallocer buf, ni remalocer mais plutot remplir de \0
 	line = NULL;
-	if (buf && ft_find_end_line(buf) > 0)
-	{
-		line = ft_strjoin(line, ft_close_current_line(buf));
-		buf = ft_begin_new_line(buf);
-		return (line);
-	}
 	while (1)
 	{
-		tmp = (char *)calloc((BUFFER_SIZE + 1), sizeof(char));
+		tmp = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 		if (!tmp)
 			return(NULL);
 		nb_read_bytes = read(fd, tmp, BUFFER_SIZE);
-//		printf("%d\n", nb_read_bytes);
-//		printf("%s", buf);
-		buf = ft_strjoin(buf, tmp);
-		if (nb_read_bytes == -1)//erreur de lecture
-			return(NULL);
+		if (nb_read_bytes == -1)
+			return (err(&buf, &tmp));
 		if (nb_read_bytes == 0)
-			return (buf);
-		if (ft_find_end_line(buf) > 0)
-		{
-			line = ft_strjoin(line, ft_close_current_line(buf));
-			buf = ft_begin_new_line(buf);
-			return (line);
-		}
+			return (eof(&buf, &line, &tmp));
+		join_buf(&buf, &tmp);
+		if (buf == NULL)
+			return (NULL);
+		if (find_line_return(buf) > 0)
+			return (get_line(&buf, &line));
 	}
 }

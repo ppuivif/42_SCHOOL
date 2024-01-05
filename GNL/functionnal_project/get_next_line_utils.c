@@ -68,7 +68,7 @@ char	*ft_strjoin(char *s1, char *s2)
 		j++;
 	}
 	free(s1);
-//	s1 = NULL;
+	s1 = NULL;
 	return (str);
 }
 
@@ -88,39 +88,6 @@ int	find_line_return(char *s)
 	return (0);
 }
 
-void	new_function(char **line, char **buf)
-{
-	int len;
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	len = find_line_return(*buf);
-	*line = ft_calloc((len + 1), sizeof(char));
-	if (!*line)
-		*line = NULL;
-	else
-	{
-		while (*buf && *buf[i] && i < len)
-		{
-			*line[i] = *buf[i];
-			i++;
-		}
-		if (*buf[i] == '\0')
-		{
-			free(*buf);
-			*buf = NULL;
-		}
-		else
-		{
-			while (*buf[i])
-				*buf[j++] = *buf[i++];
-	//		*buf[j+1] = '\0';
-		}
-	}	
-}
-
 char	*begin_new_line(char *s1)
 {
 	char	*s2;
@@ -132,10 +99,10 @@ char	*begin_new_line(char *s1)
 	if (len == 0)
 	{
 		free(s1);
-//		s1 = NULL;
+		s1 = NULL;
 		return (NULL);
 	}
-	s2 = ft_calloc(len + 1, sizeof(char));while (*buf && *buf[i] && i < len)
+	s2 = ft_calloc(len + 1, sizeof(char));
 	if (!s2)
 		return (NULL);
 	i = 0;
@@ -149,7 +116,7 @@ char	*begin_new_line(char *s1)
 	if (s1)
 	{
 		free(s1);
-//		s1 = NULL;
+		s1 = NULL;
 	}
 	return (s2);
 }
@@ -172,3 +139,5 @@ char	*close_current_line(char *s1)
 	}
 	return (s2);
 }
+
+

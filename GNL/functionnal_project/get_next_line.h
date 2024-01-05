@@ -21,13 +21,18 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
+char *ft_find_nl(char *buf, char *find_line_return, char *line, char *tmp);
 char		*get_next_line (int fd);
+void		free_all(char *s1, char *s2);
+void		ft_bzero(void *s, size_t n);
 void		*ft_calloc(size_t nmemb, size_t size);
 int		ft_strlen(char *s);
+char		*fill_str(char *s1, const char *s2, int i, int j);
 char		*ft_strjoin(char *s1, char *s2);
 int		find_line_return(char *s);
-void	new_function(char **line, char **buf);
-char		*close_current_line(char *s1);
+int		find_zero(char *s);
 char		*begin_new_line(char *s1);
+char		*close_current_line(char *s1);
+char		*end_of_file(char *buf, char *tmp, char *line);
 
 #endif
