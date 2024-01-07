@@ -41,7 +41,7 @@ all: $(NAME)
 $(NAME): $(OBJECTS)
 //cette ligne est une regle
 //$(NAME) est la syntaxe pour referencer la variable NAME prealablement declaree
-//$(NAME) est la cible a construire, pour aboutir a la creation de l'executable libftprintf.h
+//$(NAME) est la cible a construire, pour aboutir a la creation de l'executable libftprintf.a
 //la regle appelle la variable OBJECTS qui contient la liste des fichiers .o obtenus a partir des fichiers .c
 //la regle verifie que les fichiers objets sont plus recents que les fichiers sources correspondant
 //si necessaire le Makefile reconstruit les fichiers objets
@@ -79,7 +79,7 @@ $(CC) $(CFLAGS) -c $< -o $@ : Cette ligne est la commande pour générer le fich
 
 $(CC) : Il s'agit de la variable qui contient le nom du compilateur C à utiliser (par exemple, gcc).
 
-$(CFLAGS) : Il s'agit de la variable qui contient les options de compilation, telles que les drapeaux de compilation et les options d'optimisation.
+$(CFLAGS) : Il s'agit de la variable qui contient les options de compilation, telles que les flags (drapeaux) de compilation et les options d'optimisation.
 
 -c : Cet argument indique au compilateur de ne pas effectuer l'étape de liaison, produisant ainsi un fichier objet plutôt qu'un exécutable.
 

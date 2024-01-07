@@ -20,11 +20,10 @@ static char	*eof(char **buf, char **line, char **tmp)
 	{
 		if (find_line_return(*buf) > 0)
 		{
-			new_function(&(*line), &(*buf));
-//			*line = close_current_line(*buf);
-//			*buf = begin_new_line(*buf);
+			*line = close_current_line(*buf);
+			*buf = begin_new_line(*buf);
 			free(*tmp);
-			* tmp = NULL;
+			*tmp = NULL;
 			return (*line);
 		}
 		*line = ft_strjoin(*line, *buf);
@@ -44,12 +43,12 @@ static char	*eof(char **buf, char **line, char **tmp)
 	}
 }
 
-static char	*read_error(char **s1, char **s2)
+static char	*err(char **buf, char **tmp)
 {
-	free(*s1);
-	*s1 = NULL;
-	free(*s2);
-	*s2 = NULL;
+	free(*buf);
+	*buf = NULL;
+	free(*tmp);
+	*tmp = NULL;
 	return (NULL);
 }
 
@@ -85,7 +84,7 @@ char	*get_next_line(int fd)
 			return(NULL);
 		nb_read_bytes = read(fd, tmp, BUFFER_SIZE);
 		if (nb_read_bytes == -1)
-			return (read_error(&buf, &tmp));
+			return (err(&buf, &tmp));
 		if (nb_read_bytes == 0)
 			return (eof(&buf, &line, &tmp));
 		join_buf(&buf, &tmp);
