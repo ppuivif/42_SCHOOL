@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ultimate_range.c                                :+:      :+:    :+:   */
+/*   ft_print_comb.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppuivif <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/05 13:32:29 by ppuivif           #+#    #+#             */
-/*   Updated: 2023/09/05 19:33:56 by ppuivif          ###   ########.fr       */
+/*   Created: 2023/08/17 08:50:25 by ppuivif           #+#    #+#             */
+/*   Updated: 2023/08/18 18:46:38 by ppuivif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <unistd.h>
 
-int	ft_ultimate_range(int **range, int min, int max)
+void	ft_print_comb(void)
 {
-	int	i;
-	int	k;
+	char	a;
+	char	b;
+	char	c;
 
-	i = 0;
-	k = max - min;
-	if (k < 0)
+	a = '0';
+	while (a < '7')
 	{
-		*range = NULL;
-		return (0);
+		b = a +1;
+		while (b <= '9')
+		{	
+			c = b +1;
+			while (c <= '9')
+			{
+				write(1, &a, 1);
+				write(1, &b, 1);
+				write(1, &c, 1);
+				write(1, ", ", 1);
+				c++;
+			}
+			b++;
+		}
+		a++;
 	}
-	*range = (int *)malloc(sizeof(int) * k);
-	if (*range == 0)
-		return (-1);
-	while (i < k)
-	{
-		(*range)[i] = min + i;
-		i++;
-	}
-	return (k);
+	write(1, "789", 3);
 }

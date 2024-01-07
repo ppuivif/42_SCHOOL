@@ -11,14 +11,13 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 void	*ft_calloc(size_t nmemb, size_t size)
 {
 	char	*str;
 	size_t	j;
 	size_t	i;
-	
+
 	j = nmemb * size;
 	i = 0;
 	if (!size || !nmemb)
@@ -39,7 +38,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 int	ft_strlen(char *s)
 {
 	int	i;
-	
+
 	i = 0;
 	while (s && s[i])
 		i++;
@@ -72,34 +71,17 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (str);
 }
 
-int	find_line_return(char *s)
-{
-	int		i;
-
-	if (!s)
-		return(0);
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] == '\n')
-			return (i + 1);
-		i++;
-	}
-	return (0);
-}
-
 char	*begin_new_line(char *s1)
 {
 	char	*s2;
-	int	len;
-	int	i;
-	int	j;
+	int		len;
+	int		i;
+	int		j;
 
 	len = ft_strlen(s1) - find_line_return(s1);
 	if (len == 0)
 	{
 		free(s1);
-		s1 = NULL;
 		return (NULL);
 	}
 	s2 = ft_calloc(len + 1, sizeof(char));
@@ -114,18 +96,15 @@ char	*begin_new_line(char *s1)
 		j++;
 	}
 	if (s1)
-	{
 		free(s1);
-		s1 = NULL;
-	}
 	return (s2);
 }
 
 char	*close_current_line(char *s1)
 {
 	char	*s2;
-	int	len;
-	int	i;
+	int		len;
+	int		i;
 
 	len = find_line_return(s1);
 	s2 = ft_calloc((len + 1), sizeof(char));
@@ -139,5 +118,3 @@ char	*close_current_line(char *s1)
 	}
 	return (s2);
 }
-
-

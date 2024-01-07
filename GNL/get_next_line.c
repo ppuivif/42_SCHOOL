@@ -11,8 +11,22 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
-#include <string.h>
+
+int	find_line_return(char *s)
+{
+	int		i;
+
+	if (!s)
+		return (0);
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] == '\n')
+			return (i + 1);
+		i++;
+	}
+	return (0);
+}
 
 static char	*err(char **buf, char **tmp)
 {
@@ -52,21 +66,23 @@ static char	*eof(char **buf, char **line, char **tmp)
 	}
 }
 
-static char *new(char **line, char **buf,char **tmp)
+static int	new(char **line, char **buf, char **tmp)
 {
 	*buf = ft_strjoin(*buf, *tmp);
 	free(*tmp);
 	*tmp = NULL;
 	if (*buf == NULL)
-		return (NULL);
+	{
+		*line = NULL;
+		return (0);
+	}
 	if (find_line_return(*buf) > 0)
 	{
 		*line = close_current_line(*buf);
 		*buf = begin_new_line(*buf);
-		return (*line);
+		return (0);
 	}
-	return (NULL);
-//	*buf;
+	return (1);
 }
 
 char	*get_next_line(int fd)
@@ -75,7 +91,9 @@ char	*get_next_line(int fd)
 	static char	*buf;
 	char		*tmp;
 	char		*line;
+	int			flag;
 
+	flag = 0;
 	nb_read_bytes = 0;
 	if (fd < 0 || fd >= 1024 || BUFFER_SIZE <= 0)
 		return (NULL);
@@ -84,12 +102,14 @@ char	*get_next_line(int fd)
 	{
 		tmp = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 		if (!tmp)
-			return(NULL);
+			return (NULL);
 		nb_read_bytes = read(fd, tmp, BUFFER_SIZE);
 		if (nb_read_bytes == -1)
 			return (err(&buf, &tmp));
 		if (nb_read_bytes == 0)
 			return (eof(&buf, &line, &tmp));
-		return(new(&line, &buf, &tmp));
+		flag = new(&line, &buf, &tmp);
+		if (flag == 0)
+			return (line);
 	}
 }

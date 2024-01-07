@@ -17,20 +17,17 @@
 #  define BUFFER_SIZE 100
 # endif
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <fcntl.h>
 
-char		*get_next_line (int fd);
-void		*ft_calloc(size_t nmemb, size_t size);
+char	*get_next_line(int fd);
+void	*ft_calloc(size_t nmemb, size_t size);
 int		ft_strlen(char *s);
-char		*ft_strjoin(char *s1, char *s2);
+char	*ft_strjoin(char *s1, char *s2);
 int		find_line_return(char *s);
 void	new_function(char **line, char **buf);
-char		*close_current_line(char *s1);
-char		*begin_new_line(char *s1);
-char	*ft_strdup(char *s);
-char	*ft_substr(char	*s, unsigned int start, size_t len);
-char	*ft_strchr(const char *s, int c);
+char	*close_current_line(char *s1);
+char	*begin_new_line(char *s1);
 
 #endif

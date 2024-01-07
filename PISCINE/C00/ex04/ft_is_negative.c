@@ -1,36 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ultimate_range.c                                :+:      :+:    :+:   */
+/*   ft_is_negative.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppuivif <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/05 13:32:29 by ppuivif           #+#    #+#             */
-/*   Updated: 2023/09/05 19:33:56 by ppuivif          ###   ########.fr       */
+/*   Created: 2023/08/16 22:15:17 by ppuivif           #+#    #+#             */
+/*   Updated: 2023/08/17 08:42:31 by ppuivif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <unistd.h>
 
-#include <stdlib.h>
-
-int	ft_ultimate_range(int **range, int min, int max)
-{
-	int	i;
-	int	k;
-
-	i = 0;
-	k = max - min;
-	if (k < 0)
-	{
-		*range = NULL;
-		return (0);
-	}
-	*range = (int *)malloc(sizeof(int) * k);
-	if (*range == 0)
-		return (-1);
-	while (i < k)
-	{
-		(*range)[i] = min + i;
-		i++;
-	}
-	return (k);
+void	ft_is_negative(int n)
+{	
+	if (n < 0)
+		write(1, "N", 1);
+	else
+		write(1, "P", 1);
 }

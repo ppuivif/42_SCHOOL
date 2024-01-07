@@ -1,36 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ultimate_range.c                                :+:      :+:    :+:   */
+/*   ft_is_prime.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppuivif <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/05 13:32:29 by ppuivif           #+#    #+#             */
-/*   Updated: 2023/09/05 19:33:56 by ppuivif          ###   ########.fr       */
+/*   Created: 2023/09/03 16:44:21 by ppuivif           #+#    #+#             */
+/*   Updated: 2023/09/04 15:26:11 by ppuivif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-
-int	ft_ultimate_range(int **range, int min, int max)
+int	ft_is_prime(int nb)
 {
 	int	i;
-	int	k;
 
-	i = 0;
-	k = max - min;
-	if (k < 0)
-	{
-		*range = NULL;
+	i = 2;
+	if (nb < 2)
 		return (0);
-	}
-	*range = (int *)malloc(sizeof(int) * k);
-	if (*range == 0)
-		return (-1);
-	while (i < k)
+	while (i <= (nb / i))
 	{
-		(*range)[i] = min + i;
+		if (nb % i == 0)
+			return (0);
 		i++;
 	}
-	return (k);
+	return (1);
 }

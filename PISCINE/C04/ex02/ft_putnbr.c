@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ultimate_range.c                                :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppuivif <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/05 13:32:29 by ppuivif           #+#    #+#             */
-/*   Updated: 2023/09/05 19:33:56 by ppuivif          ###   ########.fr       */
+/*   Created: 2023/08/30 09:22:12 by ppuivif           #+#    #+#             */
+/*   Updated: 2023/08/30 10:54:57 by ppuivif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include <unistd.h>
 
-int	ft_ultimate_range(int **range, int min, int max)
+void	ft_putchar(int nb)
 {
-	int	i;
-	int	k;
+	char	num;
 
-	i = 0;
-	k = max - min;
-	if (k < 0)
+	num = nb + '0';
+	write(1, &num, 1);
+}
+
+void	ft_putnbr(int nb)
+{
+	if (nb == -2147483648)
+		write (1, "-2147483648", 11);
+	else
 	{
-		*range = NULL;
-		return (0);
+		if (nb < 0)
+		{
+			nb *= -1;
+			write(1, "-", 1);
+		}
+		if (nb > 9)
+		{
+			ft_putnbr(nb / 10);
+		}
+		nb %= 10;
+		ft_putchar(nb);
 	}
-	*range = (int *)malloc(sizeof(int) * k);
-	if (*range == 0)
-		return (-1);
-	while (i < k)
-	{
-		(*range)[i] = min + i;
-		i++;
-	}
-	return (k);
 }

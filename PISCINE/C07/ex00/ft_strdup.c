@@ -11,11 +11,12 @@
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 
 int	ft_strlen(char *src)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (src[i] != '\0')
 	{
 		i++;
@@ -23,41 +24,22 @@ int	ft_strlen(char *src)
 	return (i);
 }
 
-
-
 char	*ft_strdup(char *src)
 {
-	int i;
-	int k;
-	char *dest;
+	int		i;
+	int		k;
+	char	*dest;
 
 	i = 0;
 	k = ft_strlen(src);
-	dest =(char*)malloc((k+1)*sizeof(char));
+	dest = (char *) malloc ((k + 1) * sizeof(char));
 	if (dest == NULL)
-		return NULL;
+		return (NULL);
 	while (src[i] != '\0')
 	{
 		dest[i] = src[i];
 		i++;
 	}
-	dest[i+1] = '\0';
+	dest[i + 1] = '\0';
 	return (dest);
 }
-
-int	main(int argc, char **argv)
-{
-	if(argc == 2)
-	{
-		printf("%s", ft_strdup(argv[1]));
-	}
-	return (0);
-}
-
-/*int	main(void)
-{
-	char *dest = ft_strdup("test");
-	printf("%s", dest);
-	free(dest);
-	return (0);
-}*/
