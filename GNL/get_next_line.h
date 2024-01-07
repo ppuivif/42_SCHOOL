@@ -29,5 +29,8 @@ int		find_line_return(char *s);
 void	new_function(char **line, char **buf);
 char		*close_current_line(char *s1);
 char		*begin_new_line(char *s1);
+char	*ft_strdup(char *s);
+char	*ft_substr(char	*s, unsigned int start, size_t len);
+char	*ft_strchr(const char *s, int c);
 
 #endif

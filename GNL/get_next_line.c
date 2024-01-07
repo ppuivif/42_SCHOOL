@@ -14,6 +14,15 @@
 #include <stdio.h>
 #include <string.h>
 
+static char	*err(char **buf, char **tmp)
+{
+	free(*buf);
+	*buf = NULL;
+	free(*tmp);
+	*tmp = NULL;
+	return (NULL);
+}
+
 static char	*eof(char **buf, char **line, char **tmp)
 {
 	if (*buf)
@@ -43,27 +52,21 @@ static char	*eof(char **buf, char **line, char **tmp)
 	}
 }
 
-static char	*err(char **buf, char **tmp)
-{
-	free(*buf);
-	*buf = NULL;
-	free(*tmp);
-	*tmp = NULL;
-	return (NULL);
-}
-
-static char	*get_line(char **buf, char **line)
-{
-	*line = close_current_line(*buf);
-	*buf = begin_new_line(*buf);
-	return (*line);
-}
-
-static void	join_buf(char **buf, char **tmp)
+static char *new(char **line, char **buf,char **tmp)
 {
 	*buf = ft_strjoin(*buf, *tmp);
 	free(*tmp);
 	*tmp = NULL;
+	if (*buf == NULL)
+		return (NULL);
+	if (find_line_return(*buf) > 0)
+	{
+		*line = close_current_line(*buf);
+		*buf = begin_new_line(*buf);
+		return (*line);
+	}
+	return (NULL);
+//	*buf;
 }
 
 char	*get_next_line(int fd)
@@ -87,10 +90,6 @@ char	*get_next_line(int fd)
 			return (err(&buf, &tmp));
 		if (nb_read_bytes == 0)
 			return (eof(&buf, &line, &tmp));
-		join_buf(&buf, &tmp);
-		if (buf == NULL)
-			return (NULL);
-		if (find_line_return(buf) > 0)
-			return (get_line(&buf, &line));
+		return(new(&line, &buf, &tmp));
 	}
 }
