@@ -1,42 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_substr.c                                        :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ppuivif <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/15 15:09:34 by ppuivif           #+#    #+#             */
-/*   Updated: 2023/11/22 17:30:31 by ppuivif          ###   ########.fr       */
+/*   Created: 2023/11/10 15:55:33 by ppuivif           #+#    #+#             */
+/*   Updated: 2023/11/20 12:14:56 by ppuivif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(char	const *s, unsigned int start, size_t len)
+char	*ft_strchr(const char *s, int c)
 {
-	size_t		i;
-	size_t		j;
-	char		*str;
+	int		i;
 
-	i = start;
-	j = 0;
+	i = 0;
 	if (!s)
 		return (NULL);
-	if (start > (unsigned int)ft_strlen(s))
-		return (ft_strdup(""));
-	if (len > (ft_strlen(&s[start])))
-		len = ft_strlen(&s[start]);
-	str = (char *)malloc((len + 1) * sizeof (char));
-	if (str)
+	while (s[i] != '\0')
 	{
-		while (j < len && s[i] != '\0')
-		{
-			str[j] = s[i];
-			j++;
-			i++;
-		}
-		str[j] = '\0';
-		return (str);
+		if (s[i] == (char)c)
+			return ((char *)&(s[i]));//or ((char *)&(s + i))
+		i++;
 	}
-	return (NULL);
+	if (s[i] == (char)c)//case where c = '\0'
+		return ((char *)&(s[i]));// or ((char *)&(s + i))
+	return (0);
 }

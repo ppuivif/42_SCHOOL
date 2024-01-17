@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppuivif <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ppuivif <ppuivif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/14 14:15:24 by ppuivif           #+#    #+#             */
-/*   Updated: 2023/12/14 20:12:47 by ppuivif          ###   ########.fr       */
+/*   Updated: 2024/01/15 16:03:44 by ppuivif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 int	find_line_return(char *s)
 {
@@ -26,15 +26,6 @@ int	find_line_return(char *s)
 		i++;
 	}
 	return (0);
-}
-
-static char	*err(char **buf, char **tmp)
-{
-	free(*buf);
-	*buf = NULL;
-	free(*tmp);
-	*tmp = NULL;
-	return (NULL);
 }
 
 static char	*eof(char **buf, char **line, char **tmp)
@@ -66,7 +57,21 @@ static char	*eof(char **buf, char **line, char **tmp)
 	}
 }
 
-static int	new(char **line, char **buf, char **tmp)
+static char	*er_or_last_read(int n_bytes, char **tmp, char **buf, char **line)
+{
+	if (n_bytes == -1)
+	{
+		free(*tmp);
+		*tmp = NULL;
+		free(*buf);
+		*buf = NULL;
+		return (NULL);
+	}
+	*line = eof(&(*buf), &(*line), &(*tmp));
+	return (*line);
+}
+
+static int	current_line(char **line, char **buf, char **tmp)
 {
 	*buf = ft_strjoin(*buf, *tmp);
 	free(*tmp);
@@ -88,14 +93,12 @@ static int	new(char **line, char **buf, char **tmp)
 char	*get_next_line(int fd)
 {
 	int			nb_read_bytes;
-	static char	*buf;
+	static char	*buf[1024];
 	char		*tmp;
 	char		*line;
-	int			flag;
 
-	flag = 0;
 	nb_read_bytes = 0;
-	if (fd < 0 || fd >= 1024 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	line = NULL;
 	while (1)
@@ -104,12 +107,12 @@ char	*get_next_line(int fd)
 		if (!tmp)
 			return (NULL);
 		nb_read_bytes = read(fd, tmp, BUFFER_SIZE);
-		if (nb_read_bytes == -1)
-			return (err(&buf, &tmp));
-		if (nb_read_bytes == 0)
-			return (eof(&buf, &line, &tmp));
-		flag = new(&line, &buf, &tmp);
-		if (flag == 0)
+		if (nb_read_bytes == -1 || nb_read_bytes == 0)
+		{
+			line = er_or_last_read(nb_read_bytes, &tmp, &buf[fd], &line);
+			return (line);
+		}
+		if (current_line(&line, &buf[fd], &tmp) == 0)
 			return (line);
 	}
 }
